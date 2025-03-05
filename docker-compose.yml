@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: user_management_web
+    command: gunicorn user_management_system.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - DATABASE_HOST
+    environment:
+      - DEBUG=False
+      - DJANGO_SETTINGS_MODULE=user_management_system.settings
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/user_management_db
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=admin
+      - DATABASE_HOST=DATABASE_HOST
+      - DATABASE_PORT=5432
+
+  DATABASE_HOST:
+    image: postgres:15
+    container_name: user_management_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

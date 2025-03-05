@@ -1,0 +1,6 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+PyYAML
+gunicorn
+psycopg[binary,pool]

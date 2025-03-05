@@ -1,0 +1,37 @@
+Setup Instructions
+1)Clone the repository:
+    git clone https://github.com/amolsuruse/user_management_system.git
+
+2)Goto Project Directory
+cd user_management_system
+
+3)Build and run containers:
+ docker-compose up --build -d
+
+4)Apply database migrations:
+ docker-compose exec web python manage.py migrate
+
+5)Create a superuser (optional):
+ docker-compose exec web python manage.py createsuperuser
+
+6)Access the application:
+API: http://localhost:8000/api/
+Admin Panel: http://localhost:8000/admin/
+
+example:
+   create user:
+   POST http://localhost:8000/api/users
+   Login :
+   POST http://localhost:8000/api/auth/login/
+        body{username:"username", password:"password"}
+
+### **Authentication**
+Most endpoints require an authentication token. You need to include an `Authorization` header in requests:
+You can get auth token by logn request and use this token to perform other request.
+```http
+Authorization: Bearer <your_token>
+```
+
+7)Fore more information check
+    i) user_management_app/docs/core_feature_and_api_design.md
+    ii) user_management_app/docs/high_level_design.md
